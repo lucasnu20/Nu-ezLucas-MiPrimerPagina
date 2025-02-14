@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Pedido</title>
+</head>
+<body>
+    <h1>Formulario para creación de pedidos</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Número de pedido -->
+        <label for="numero_pedido">Número de Pedido:</label>
+        <input type="text" id="numero_pedido" name="numero_pedido" required><br><br>
+
+        <!-- Fecha de pedido (automática en el backend) -->
+        <label for="fecha_pedido">Fecha de Pedido:</label>
+        <input type="date" id="fecha_pedido" name="fecha_pedido" value="{{ fecha_pedido }}" readonly><br><br>
+
+        <!-- Productos solicitados -->
+        <label for="producto">Producto Solicitado:</label>
+        <select id="producto" name="producto" required>
+            <option value="">Seleccione un producto</option>
+            {% for producto in productos %}
+                <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Crear Pedido</button>
+    </form>
+    
+</body>
+</html>

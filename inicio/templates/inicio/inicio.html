@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inicio</title>
 </head>
 <body>
+    <nav>
+        <a href = {% url "inicio" %}>Inicio</a>
+        <a href = {% url "crear_producto" %}>Crear producto</a>
+        <a href = {% url "listado_productos" %}>Listado de productos</a>
+        <a href = {% url "crear_pedido" %}>Crear pedido</a>
+
+    </nav>
     <h1>Esta es la vista de inicio</h1>
     <h1>Modifique el template</h1>
 </body>
