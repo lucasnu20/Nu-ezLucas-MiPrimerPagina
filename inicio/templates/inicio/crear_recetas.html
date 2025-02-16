@@ -1,0 +1,54 @@
+{% extends 'inicio/base.html' %}
+{% load static %}
+
+{% block title %}Crear receta{% endblock %}
+
+{% block content %}
+    <style>
+        .form-label, .form-control, .form-control::placeholder, .form-text, .text-muted {
+            color: white !important;
+        }
+        label {
+            color: white !important;
+        }
+        .help-text {
+            color: white !important;
+        }
+    </style>
+    <section style="min-height: 100vh;">
+        <div class="container-fluid p-5" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+            <h1 class="text-center mb-4" style="color: white;">Crear recetas</h1>
+            <form action="" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ formulario.titulo.label_tag }}
+                    {{ formulario.titulo }}
+                </div>
+                <div class="mb-3">
+                    {{ formulario.descripcion.label_tag }}
+                    {{ formulario.descripcion }}
+                </div>
+                <div class="mb-3">
+                    {{ formulario.ingredientes.label_tag }}
+                    {{ formulario.ingredientes }}
+                </div>
+                <div class="mb-3">
+                    {{ formulario.pasos.label_tag }}
+                    {{ formulario.pasos }}
+                </div>
+                <div class="mb-3">
+                    {{ formulario.tiempo_preparacion.label_tag }}
+                    {{ formulario.tiempo_preparacion }}
+                    <small class="form-text text-muted">{{ formulario.tiempo_preparacion.help_text }}</small>
+                </div>
+                <div class="mb-3">
+                    {{ formulario.imagen.label_tag }}
+                    {{ formulario.imagen }}
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Crear receta</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

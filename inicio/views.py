@@ -1,37 +1,51 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
+from django.contrib import messages
 from django.http import HttpResponse
 from datetime import datetime
-from inicio.models import Producto, Pedido
-from inicio.forms import CrearProducto, BuscarProducto
+from django.utils import timezone
+from inicio.models import Receta
+from inicio.forms import CrearReceta, BuscarReceta
 # Create your views here.
 
 def inicio(request):
-    #return HttpResponse("<h1>Hola soy la vista</h1>")
     return render(request, 'inicio/inicio.html')
 
-def crear_producto(request):
-    formulario = CrearProducto()
-    
+def crear_receta(request):
+    formulario = CrearReceta()
+
     if request.method == "POST":
-        formulario = CrearProducto(request.POST)
+        formulario = CrearReceta(request.POST,request.FILES)
+
         if formulario.is_valid():
-            nombre = formulario.cleaned_data.get("nombre")
-            precio = formulario.cleaned_data.get("precio")
+
+            titulo = formulario.cleaned_data.get("titulo")
             descripcion = formulario.cleaned_data.get("descripcion")
-            producto = Producto(nombre=nombre, precio=precio, descripcion=descripcion)
-            producto.save()
-            return redirect("listado_productos")
-    return render(request, 'inicio/crear_producto.html',{"formulario":formulario})
+            ingredientes = formulario.cleaned_data.get("ingredientes")
+            pasos = formulario.cleaned_data.get("pasos")
+            fecha_creacion = formulario.cleaned_data.get("fecha_creacion")
+            tiempo_preparacion = formulario.cleaned_data.get("tiempo_preparacion")
+            imagen = formulario.cleaned_data.get("imagen")
+  
+            receta = Receta(titulo=titulo,
+                            ingredientes=ingredientes,
+                            descripcion=descripcion,
+                            pasos=pasos,
+                            fecha_creacion=fecha_creacion,
+                            tiempo_preparacion=tiempo_preparacion,
+                            imagen=imagen)
+            receta.save()
+            return redirect("listado_recetas")
+    return render(request, 'inicio/crear_recetas.html',{"formulario":formulario})
 
-def listado_productos(request):
-    productos = Producto.objects.all()
-    formulario = BuscarProducto(request.GET)
+def listado_recetas(request):
+    recetas = Receta.objects.all()
+    formulario = BuscarReceta(request.GET,request.FILES)
     if formulario.is_valid():
-        producto_buscado = formulario.cleaned_data.get("nombre")
-        productos = Producto.objects.filter(nombre__icontains=producto_buscado)
+        receta_buscada = formulario.cleaned_data.get("titulo")
+        recetas = Receta.objects.filter(titulo__icontains=receta_buscada)
         
-    return render(request, 'inicio/listado_productos.html',{'productos':productos,'formulario':formulario})
+    return render(request, 'inicio/listado_recetas.html',{'recetas':recetas,'formulario':formulario})
 
-
-def crear_pedido(request):
-    return render(request, 'inicio/crear_pedido.html')
+def detalle_receta(request, receta_id):
+    receta = get_object_or_404(Receta, id=receta_id)
+    return render(request, 'inicio/detalle_receta.html', {'receta': receta})

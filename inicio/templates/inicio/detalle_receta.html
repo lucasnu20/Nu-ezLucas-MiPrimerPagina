@@ -1,0 +1,21 @@
+{% extends 'inicio/base.html' %}
+
+{% block title %}{{ receta.titulo }}{% endblock %}
+
+{% block content %}
+    <div class="container my-4" style="color: white;">
+        <h1 class="text-center mb-4" style="color: white;">{{ receta.titulo }}</h1>
+        {% if receta.imagen %}
+            <div class="text-center mb-4">
+                <img src="{{ receta.imagen.url }}" alt="{{ receta.titulo }}" class="img-fluid" style="max-width: 600px; height: auto;">
+            </div>
+        {% endif %}
+        <div class="p-4" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+            <p><strong>Descripción:</strong> {{ receta.descripcion }}</p>
+            <p><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
+            <p><strong>Pasos a seguir:</strong> {{ receta.pasos }}</p>
+            <p><strong>Tiempo de preparación:</strong> {{ receta.tiempo_preparacion }} minutos</p>
+            <p><strong>Fecha de creación:</strong> {{ receta.fecha_creacion }}</p>
+        </div>
+    </div>
+{% endblock %}

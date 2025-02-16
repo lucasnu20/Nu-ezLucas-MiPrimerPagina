@@ -1,0 +1,60 @@
+{% extends 'inicio/base.html' %}
+
+{% block title %}Listado de recetas{% endblock %}
+
+{% block content %}
+    <style>
+        .form-label, .form-control, .form-control::placeholder {
+            color: white !important;
+        }
+        label {
+            color: white !important;
+        }
+        .receta-card {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            color: white;
+        }
+        .receta-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+    <div class="container my-4">
+        <h1 class="text-center mb-4" style="color: white;">Listado de recetas</h1>
+        <form action="" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                {{ formulario.as_p }}
+            </div>
+            <div class="d-grid">
+                <input type="submit" value="Buscar" class="btn btn-primary">
+            </div>
+        </form>
+        {% if recetas %}
+            <div class="p-4" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                <div class="row">
+                    {% for receta in recetas %}
+                        <div class="col-md-6 mb-4">
+                            <div class="receta-card h-100">
+                                {% if receta.imagen %}
+                                    <img src="{{ receta.imagen.url }}" alt="{{ receta.titulo }}" class="receta-img">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="{% url 'detalle_receta' receta.id %}" class="text-decoration-none text-white">{{ receta.titulo }}</a>
+                                    </h5>
+                                    <p class="card-text">{{ receta.descripcion }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center" style="color: white;">No existen recetas cargadas</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path
-from inicio.views import inicio, crear_pedido,crear_producto,listado_productos
+from inicio.views import inicio, crear_receta,listado_recetas, detalle_receta
 
 urlpatterns = [
     path('', inicio, name='inicio'),
-    path('crear-producto/', crear_producto, name='crear_producto'),
-    path('crear-pedido/', crear_pedido, name='crear_pedido'),
-    path('listado-productos/', listado_productos, name='listado_productos')
+    path('crear-receta/', crear_receta, name='crear_receta'),
+    path('listado-recetas/', listado_recetas, name='listado_recetas'),
+    path('detalle-receta/<int:receta_id>',detalle_receta, name='detalle_receta')
 ]
