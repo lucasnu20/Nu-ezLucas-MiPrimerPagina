@@ -49,7 +49,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+# Desactivar caché en las vistas
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 0
+CACHE_MIDDLEWARE_KEY_PREFIX = 'your_cache_prefix'
 
 ROOT_URLCONF = 'primer_proyecto.urls'
 
@@ -129,3 +136,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Ruta donde se almacenarán los archivos de medios (imágenes, documentos, etc.)
 MEDIA_URL = '/media/'  # URL accesible para los archivos subidos
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directorio donde se almacenarán físicamente los archivos
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'

@@ -1,0 +1,138 @@
+{% extends 'inicio/base.html' %}
+{% load static %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+    <style>
+        /* Estilos generales para la página */
+        .container {
+            max-width: 100%; /* Ocupa todo el ancho disponible */
+            padding-left: 0;
+            padding-right: 0;
+            margin-top: 30px;
+        }
+
+        /* Estilo de la imagen del perfil */
+        .profile-img img {
+            border: 5px solid #ddd;
+            padding: 5px;
+            border-radius: 50%;
+            width: 220px; /* Establecer un tamaño fijo para la imagen */
+            height: 220px;
+            object-fit: cover; /* Asegura que la imagen se recorte adecuadamente */
+            margin-left: 0; /* Centrar imagen */
+            margin-right: 20px; /* Separar de los textos */
+        }
+
+        /* Estilos de los textos */
+        .container h1 {
+            color: #ffffff; /* Texto blanco para el nombre */
+            font-weight: bold; /* Resaltar el nombre */
+            margin-bottom: 0;
+            margin-left: 100px; /* Ajustar espacio hacia la izquierda */
+        }
+
+        .container h3 {
+            color: #f7f7f7;
+            margin-top: 5px;
+            font-weight: bold;
+            margin-left: 30px; /* Ajustar margen para estar más cerca de la imagen */
+        }
+
+        .container p {
+            color: #f8f6f6; 
+            text-align: left;
+            margin-left: 0;
+            margin-right: 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .container .col-md-8 {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: left; /* Alineación a la izquierda */
+            font-weight: bold;
+            margin-left: 10px; /* Reduce el espacio entre el texto y la imagen */
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px; /* Ajustar el espacio entre la imagen y el texto */
+        }
+
+        /* Ajustar la alineación de los textos de las secciones */
+        .section-header {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            color: #faf8f8;
+            font-weight: bold;
+        }
+
+        /* Definir el tamaño y márgenes del contenedor de texto */
+        .row {
+            margin-left: 120px;
+            margin-right: 120px;
+        }
+
+        /* Asegurarse de que la imagen y los textos estén alineados en el centro */
+        .col-md-4 {
+            display: flex;
+            justify-content: center; /* Centrar la imagen */
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Contenedor de fondo oscuro con bordes redondeados */
+        .text-container {
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-top: 20px;
+        }
+
+    </style>
+
+    <div class="container">
+        <div class="row profile-header">
+            <!-- Columna para la imagen de perfil -->
+            <div class="col-md-4 profile-img">
+                <img src="{% static 'images/contacto2.jpg' %}" alt="Lucas Nuñez" class="img-fluid rounded-circle">
+            </div>
+
+            <!-- Columna para el nombre y título -->
+            <div class="col-md-8">
+                <h1>Lucas Nuñez</h1>
+                <h3>Soporte de Aplicaciones SAP</h3>
+            </div>
+        </div>
+
+        <!-- Sección "Sobre mí" -->
+        <div class="row">
+            <div class="col-md-12 text-container">
+                <div class="section-header">Sobre mí</div>
+                <p>¡Hola! Soy Lucas Nuñez, estudiante de Licenciatura en Gestión de Tecnología y con título de Técnico en Informática. Mi carrera comenzó con 2 años de estudios en Ingeniería en Sistemas, y actualmente me desempeño como Soporte de aplicaciones SAP en Paladini S.A con ya casi 3 años de experiencia en la empresa, dedicandome a los módulos SD y MM. A lo largo de mi trayectoria también he adquirido experiencia en el área de Logística, lo que me ha permitido combinar mi pasión por la tecnología con un enfoque práctico en sistemas y procesos.</p>
+            </div>
+        </div>
+
+        <!-- Sección "Intereses" -->
+        <div class="row">
+            <div class="col-md-12 text-container">
+                <div class="section-header">Intereses</div>
+                <p>Además de mi carrera en el mundo de la Tecnología, me agrada la cocina, y crecí en un hogar donde la repostería fue siempre una parte importante. Fue esto lo que me inspiró a crear una página de recetas, con el objetivo de ofrecer un espacio donde las personas puedan encontrar <b>inspiración culinaria</b>, compartir sus creaciones y descubrir nuevas recetas para disfrutar en familia</p>
+            </div>
+        </div>
+
+        <!-- Sección "Contacto" -->
+        <div class="row">
+            <div class="col-md-12 text-container">
+                <div class="section-header">Contacto</div>
+                <p>Si tienes alguna duda, propuesta o simplemente quieres hablar sobre tecnología, cocina o cómo combinar ambas cosas, ¡no dudes en contactarme! Estaré encantado de ayudarte y seguir compartiendo esta pasión.</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

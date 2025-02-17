@@ -1,15 +1,18 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from django.contrib import messages
-from django.http import HttpResponse
-from datetime import datetime
-from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 from inicio.models import Receta
-from inicio.forms import CrearReceta, BuscarReceta
+from inicio.forms import CrearReceta, BuscarReceta, CreacionUsuarios
 # Create your views here.
 
+@never_cache
 def inicio(request):
     return render(request, 'inicio/inicio.html')
 
+@login_required
+@never_cache
 def crear_receta(request):
     formulario = CrearReceta()
 
@@ -37,6 +40,7 @@ def crear_receta(request):
             return redirect("listado_recetas")
     return render(request, 'inicio/crear_recetas.html',{"formulario":formulario})
 
+@never_cache
 def listado_recetas(request):
     recetas = Receta.objects.all()
     formulario = BuscarReceta(request.GET,request.FILES)
@@ -46,6 +50,25 @@ def listado_recetas(request):
         
     return render(request, 'inicio/listado_recetas.html',{'recetas':recetas,'formulario':formulario})
 
+@never_cache
 def detalle_receta(request, receta_id):
     receta = get_object_or_404(Receta, id=receta_id)
     return render(request, 'inicio/detalle_receta.html', {'receta': receta})
+
+@never_cache
+def contacto(request):
+    return render(request, 'inicio/contacto.html')
+
+
+def registrarse(request):
+    if request.method == 'POST':
+        form = CreacionUsuarios(request.POST)
+        print(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('inicio')  # Redirigir a la página de inicio o alguna página personalizada
+    else:
+        form = CreacionUsuarios()
+
+    return render(request, 'inicio/registro.html', {'form': form})

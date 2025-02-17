@@ -1,5 +1,6 @@
 from django import forms
-from inicio.models import Receta
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class CrearReceta(forms.Form):
     titulo = forms.CharField(
@@ -63,3 +64,14 @@ class BuscarReceta(forms.Form):
             'style': 'background-color: rgba(0, 0, 0, 0.5); color: white; border: 1px solid black;'
         })
     )
+
+class CreacionUsuarios(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password1', 'password2']
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Este nombre de usuario ya está en uso.")
+        return username
