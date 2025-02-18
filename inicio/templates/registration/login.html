@@ -3,22 +3,15 @@
 {% block title %}Iniciar sesión{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2 class="my-4">Iniciar sesión</h2>
-    <form method="post" class="shadow p-4 rounded">
+    <form action="" method="POST">
+
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="id_username" class="form-label">Nombre de usuario</label>
-            {{ form.username }}
-        </div>
-        <div class="mb-3">
-            <label for="id_password" class="form-label">Contraseña</label>
-            {{ form.password }}
-        </div>
-        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+
+        <input type="text" name="username" id="" placeholder="Nombre de usuario">
+        <br>
+        <input type="text" name="password" id="" placeholder="Contraseña">
+        <button type="submit">Iniciar sesión</button>
+
+        <a href="{% url 'register' %}">¿No tienes cuenta? Registrate aquí</a>
     </form>
-    <div class="mt-3">
-        <p>¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
-    </div>
-</div>
 {% endblock %}

@@ -136,5 +136,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Ruta donde se almacenarán los archivos de medios (imágenes, documentos, etc.)
 MEDIA_URL = '/media/'  # URL accesible para los archivos subidos
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directorio donde se almacenarán físicamente los archivos
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'inicio'
+LOGIN_REDIRECT_URL = 'inicio'

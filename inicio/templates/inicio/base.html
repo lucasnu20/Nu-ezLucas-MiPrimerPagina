@@ -93,16 +93,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'crear_receta' %}">Crear receta</a>
-                        </li>
-                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'listado_recetas' %}">Listado de recetas</a>
                     </li>
                     {% if user.is_authenticated %}
-                        <form action="{% url 'logout' %}" method="POST">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'crear_receta' %}">Crear receta</a>
+                        </li>
+                        <form action="{% url 'exit' %}" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                         </form>
@@ -111,9 +109,10 @@
                             <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'registro' %}">Registrarse</a>
+                            <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
                         </li>
                     {% endif %}
+
                 </ul>
             </div>
         </div>
