@@ -1,0 +1,28 @@
+{% extends 'inicio/base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        .form-label, .form-control, .form-control::placeholder, .form-text, .text-muted {
+            color: white !important;
+        }
+        label {
+            color: white !important;
+        }
+        .help-text {
+            color: white !important;
+        }
+    </style>
+    <section style="min-height: 100vh;">
+        <div class="container-fluid p-5" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+            <h1 class="text-center mb-4" style="color: white;">{% block form_title %}{% endblock %}</h1>
+            <form action="" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                {% block form_fields %}{% endblock %}
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">{% block form_button %}{% endblock %}</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

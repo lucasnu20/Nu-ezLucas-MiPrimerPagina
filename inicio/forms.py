@@ -1,10 +1,11 @@
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django import forms 
+from django.contrib.auth.forms import UserCreationForm 
+from django.contrib.auth.models import User 
+from django.core.exceptions import ValidationError
 
 class CrearReceta(forms.Form):
     titulo = forms.CharField(
-        max_length=40,
+        max_length=60,
         widget=forms.TextInput(attrs={
             'class': 'form-control text-white',
             'placeholder': 'Título de la receta',
@@ -54,6 +55,31 @@ class CrearReceta(forms.Form):
         })
     )
 
+# pruebas de validaciones pero no se encontro una solucion definitiva, se comenta por el momento
+'''    def clean_titulo(self):
+        titulo = self.cleaned_data['titulo']
+        if len(titulo) > 60:
+            raise ValidationError("El título no puede tener más de 60 caracteres.")
+        return titulo
+
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data['descripcion']
+        if len(descripcion) > 3500:
+            raise ValidationError("La descripción no puede tener más de 3500 caracteres.")
+        return descripcion
+    
+    def clean_ingredientes(self):
+        descripcion = self.cleaned_data['descripcion']
+        if len(descripcion) > 3500:
+            raise ValidationError("Los ingredientes no pueden tener más de 3500 caracteres.")
+        return descripcion
+    
+    def clean_pasos(self):
+        descripcion = self.cleaned_data['descripcion']
+        if len(descripcion) > 3500:
+            raise ValidationError("El paso a paso no puede tener más de 3500 caracteres.")
+        return descripcion'''
+
 class BuscarReceta(forms.Form):
     titulo = forms.CharField(
         max_length=40,
@@ -75,3 +101,4 @@ class CustomUserCreationForm(UserCreationForm):
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("Este nombre de usuario ya está en uso.")
         return username
+    

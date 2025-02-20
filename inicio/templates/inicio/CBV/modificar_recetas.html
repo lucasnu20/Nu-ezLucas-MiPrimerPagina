@@ -1,8 +1,8 @@
 {% extends 'inicio/receta_CRUD_base.html' %}
 
-{% block title %}Crear receta{% endblock %}
+{% block title %}Modificar Receta{% endblock %}
 
-{% block form_title %}Crear receta{% endblock %}
+{% block form_title %}Modificar Receta{% endblock %}
 
 
 
@@ -10,17 +10,6 @@
 <div class="mb-3">
     {{ form.titulo.label_tag }}
     {{ form.titulo }}
-
-    <!--   codigo para validacion, se comenta por el momento  <label for="{{ form.titulo.id_for_label }}">Título</label> 
-    {{ form.titulo }}
-    {% if form.titulo.errors %}
-        <ul class="errorlist" style="color: rgb(247, 243, 243);">
-            {% for error in form.titulo.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}-->
-
 </div>
 <div class="mb-3">
     {{ form.descripcion.label_tag }}
@@ -45,4 +34,4 @@
 </div>
 {% endblock %}
 
-{% block form_button %}Crear receta{% endblock %}
+{% block form_button %}Modificar Receta{% endblock %}

@@ -47,6 +47,10 @@
                                         <a href="{% url 'detalle_receta' receta.id %}" class="text-decoration-none text-white">{{ receta.titulo }}</a>
                                     </h5>
                                     <p class="card-text">{{ receta.descripcion }}</p>
+                                        {% if user.is_authenticated %}
+                                        <a style="font-size: 17px" href = '{% url "modificar_recetas" pk=receta.pk %}'>Modificar receta</a>
+                                        <a style="font-size: 17px" href = '{% url "eliminar_recetas" pk=receta.pk %}'>Eliminar receta</a>
+                                        {% endif %}
                                 </div>
                             </div>
                         </div>
