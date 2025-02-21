@@ -3,16 +3,17 @@
 {% block title %}Registrarse{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-start">
-        <div class="col-md-6 text-container" style="background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 10px;">
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="row justify-content-center">
+        <div class=" text-container" style="background: rgba(0, 0, 0, 0.5); padding: 80px; border-radius: 10px;">
             <h2 class="mb-4 text-white" style="font-size: 2.5rem; font-weight: bold; text-align: center;">Registrarse</h2>
             <form method="post" class="needs-validation" novalidate>
                 {% csrf_token %}
+                
                 <!-- Campo de usuario -->
                 <div class="mb-4">
                     <label for="username" class="form-label text-white" style="font-size: 1.2rem;">Usuario</label>
-                    <input type="text" name="username" class="form-control" id="username" placeholder="Usuario" required style="background: rgba(255, 255, 255, 0.7); color: white;">
+                    <input type="text" name="username" class="form-control" id="username" placeholder="Usuario" required style="background: rgba(255, 255, 255, 0.7); color: black !important">
                     {% if form.username.errors %}
                         <ul class="mt-2 text-danger">
                             {% for error in form.username.errors %}
@@ -21,11 +22,11 @@
                         </ul>
                     {% endif %}
                 </div>
-                
-                <!-- Campo de nombre del usuario -->
+
+                <!-- Campo de nombre -->
                 <div class="mb-4">
                     <label for="first_name" class="form-label text-white" style="font-size: 1.2rem;">Nombre</label>
-                    <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Nombre" required style="background: rgba(255, 255, 255, 0.7); color: white;">
+                    <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Nombre" required style="background: rgba(255, 255, 255, 0.7); color: black !important">
                     {% if form.first_name.errors %}
                         <ul class="mt-2 text-danger">
                             {% for error in form.first_name.errors %}
@@ -35,10 +36,10 @@
                     {% endif %}
                 </div>
 
-                <!-- Campo de apellido del usuario -->
+                <!-- Campo de apellido -->
                 <div class="mb-4">
                     <label for="last_name" class="form-label text-white" style="font-size: 1.2rem;">Apellido</label>
-                    <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Apellido" required style="background: rgba(255, 255, 255, 0.7); color: white;">
+                    <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Apellido" required style="background: rgba(255, 255, 255, 0.7); color: black !important">
                     {% if form.last_name.errors %}
                         <ul class="mt-2 text-danger">
                             {% for error in form.last_name.errors %}
@@ -48,10 +49,10 @@
                     {% endif %}
                 </div>
 
-                <!-- Campo de email del usuario -->
+                <!-- Campo de email -->
                 <div class="mb-4">
                     <label for="email" class="form-label text-white" style="font-size: 1.2rem;">Email</label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" required style="background: rgba(255, 255, 255, 0.7); color: white;">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" required style="background: rgba(255, 255, 255, 0.7); color: black !important">
                     {% if form.email.errors %}
                         <ul class="mt-2 text-danger">
                             {% for error in form.email.errors %}
@@ -64,7 +65,7 @@
                 <!-- Campo de contraseña -->
                 <div class="mb-4">
                     <label for="password1" class="form-label text-white" style="font-size: 1.2rem;">Contraseña</label>
-                    <input type="password" name="password1" class="form-control" id="password1" placeholder="Contraseña" required style="background: rgba(255, 255, 255, 0.7); color: white;">
+                    <input type="password" name="password1" class="form-control" id="password1" placeholder="Contraseña" required style="background: rgba(255, 255, 255, 0.7); color: black !important">
                     {% if form.password1.errors %}
                         <ul class="mt-2 text-danger">
                             {% for error in form.password1.errors %}
@@ -77,7 +78,7 @@
                 <!-- Confirmación de contraseña -->
                 <div class="mb-4">
                     <label for="password2" class="form-label text-white" style="font-size: 1.2rem;">Confirmar contraseña</label>
-                    <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirmar contraseña" required style="background: rgba(255, 255, 255, 0.7); color: white;">
+                    <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirmar contraseña" required style="background: rgba(255, 255, 255, 0.7); color: black !important">
                     {% if form.password2.errors %}
                         <ul class="mt-2 text-danger">
                             {% for error in form.password2.errors %}
