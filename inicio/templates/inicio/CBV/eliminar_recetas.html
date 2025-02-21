@@ -7,7 +7,7 @@
     <div class="container p-5" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 8px;">
       <h1 class="text-center mb-4" style="color: white;">¿Estás seguro de que quieres eliminar esta receta?</h1>
 
-      <div style="color: white;">
+      <div style="color: white; font-size:20px">
         <h3 style="color: white;">{{ receta.titulo }}</h3>
         <p><strong>Descripción:</strong> {{ receta.descripcion }}</p>
         <p><strong>Tiempo de preparación:</strong> {{ receta.tiempo_preparacion }} minutos</p>
@@ -17,7 +17,7 @@
       <form method="post">
         {% csrf_token %}
         <div class="d-flex justify-content-between">
-          <button type="submit" class="btn btn-danger">Eliminar</button>
+          <button type="submit" class="btn btn-danger" style="font-size:23px">Eliminar</button>
           <a href="{% url 'listado_recetas' %}" class="btn btn-secondary">Cancelar</a>
         </div>
       </form>

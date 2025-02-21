@@ -5,23 +5,22 @@
 
 {% block content %}
     <section>
-        <div class="container" style="background-color: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 8px;">
+        <div class="container-fluid-custom">
             <div class="row">
-                <h3 style="color: #ffffff; font-size: 20px;">
+                <h3 class="highlight-text text-center" style="color:#ffffff">
                     {% if user.is_authenticated %}
                         ¡Hola, {{ user.username }}! espero que disfrutes!
                     {% else %}
                         ¡Inspiración Culinaria!
                     {% endif %}      
                 </h3>
-                <div class="col-md-8">
-                    <h2 class="text-center mb-4" style="color: #ffffff;">¡Bienvenido a tu fuente de inspiración culinaria!</h2>
-                    <p class="lead" style="color: #ffffff;">En esta página de recetarios encontrarás una amplia variedad de recetas para todos los gustos y niveles de habilidad en la cocina. Desde platos rápidos y fáciles para el día a día hasta recetas más elaboradas para ocasiones especiales, aquí descubrirás nuevas ideas, sabores y técnicas para disfrutar al máximo de cada comida.</p>
-                    <p class="lead" style="color: #ffffff;">Lo mejor de todo es que no solo podrás seguir nuestras recetas, sino que también podrás compartir las tuyas con la comunidad. ¡Nos encanta ver cómo todos aportan su creatividad en la cocina! Inspírate, aprende y conecta con otros apasionados por la gastronomía, compartiendo consejos, secretos y, por supuesto, deliciosas recetas.</p>
-                    <p class="lead" style="color: #ffffff;">Ya seas un amante de la cocina casera o un chef experimentado, nuestra plataforma está pensada para guiarte paso a paso y ayudarte a llevar tu pasión culinaria a otro nivel. ¡Explora, comparte y empieza a cocinar hoy mismo!</p>
+                <div class="col-12">
+                    <h2 class="text-center mb-4 highlight-title" style="color:#ffffff">¡Bienvenido a tu fuente de inspiración culinaria!</h2>
+                    <p class="lead text-depth">En esta página de recetarios encontrarás una amplia variedad de recetas para todos los gustos y niveles de habilidad en la cocina. Desde platos rápidos y fáciles para el día a día hasta recetas más elaboradas para ocasiones especiales, aquí descubrirás nuevas ideas, sabores y técnicas para disfrutar al máximo de cada comida.</p>
+                    <p class="lead text-depth">Lo mejor de todo es que no solo podrás seguir nuestras recetas, sino que también podrás compartir las tuyas con la comunidad. ¡Nos encanta ver cómo todos aportan su creatividad en la cocina! Inspírate, aprende y conecta con otros apasionados por la gastronomía, compartiendo consejos, secretos y, por supuesto, deliciosas recetas.</p>
+                    <p class="lead text-depth">Ya seas un amante de la cocina casera o un chef experimentado, nuestra plataforma está pensada para guiarte paso a paso y ayudarte a llevar tu pasión culinaria a otro nivel. ¡Explora, comparte y empieza a cocinar hoy mismo!</p>
                 </div>
             </div>
         </div>
     </section>
-
 {% endblock %}
