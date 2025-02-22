@@ -13,6 +13,7 @@ Tambien podes ver un listado de todas las recetas que hay creadas y visualizar s
 Tienes un chatbot que te puede ayudar si necesitas la recomendacion de alguna receta o saber algun dato de alguna receta.
 
 Tienes un apartado de "contacto" donde podes conocerme un poco más y tambien tienes links a mis redes sociales o mi correo electronico.
+Para experiencia mas inmersiva visualizar con zoom 100% 
 
 Esto es recien el comienzo! Muchas gracias.
 

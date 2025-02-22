@@ -18,9 +18,9 @@
                 <div class="row">
                     {% for receta in recetas %}
                         <div class="col-md-6 mb-4">
-                            <div class="receta-cardX h-100">
+                            <div class="receta-cardX h-100 img-container img:hover">
                                 {% if receta.imagen %}
-                                    <img src="{{ receta.imagen.url }}" alt="{{ receta.titulo }}" class="receta-img" >
+                                    <img src="{{ receta.imagen.url }}" alt="{{ receta.titulo }}" class="receta-img ">
                                     
                                 {% endif %}
                                 <div class="card-body">

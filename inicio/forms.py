@@ -55,30 +55,6 @@ class CrearReceta(forms.Form):
         })
     )
 
-# pruebas de validaciones pero no se encontro una solucion definitiva, se comenta por el momento
-'''    def clean_titulo(self):
-        titulo = self.cleaned_data['titulo']
-        if len(titulo) > 60:
-            raise ValidationError("El título no puede tener más de 60 caracteres.")
-        return titulo
-
-    def clean_descripcion(self):
-        descripcion = self.cleaned_data['descripcion']
-        if len(descripcion) > 3500:
-            raise ValidationError("La descripción no puede tener más de 3500 caracteres.")
-        return descripcion
-    
-    def clean_ingredientes(self):
-        descripcion = self.cleaned_data['descripcion']
-        if len(descripcion) > 3500:
-            raise ValidationError("Los ingredientes no pueden tener más de 3500 caracteres.")
-        return descripcion
-    
-    def clean_pasos(self):
-        descripcion = self.cleaned_data['descripcion']
-        if len(descripcion) > 3500:
-            raise ValidationError("El paso a paso no puede tener más de 3500 caracteres.")
-        return descripcion'''
 
 class BuscarReceta(forms.Form):
     titulo = forms.CharField(

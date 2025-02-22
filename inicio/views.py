@@ -1,18 +1,18 @@
-from django.shortcuts import render,redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from inicio.models import Receta
-from inicio.forms import CrearReceta, BuscarReceta, CustomUserCreationForm  
-from django.views.generic.edit import UpdateView,DeleteView
+from inicio.forms import CrearReceta, BuscarReceta, CustomUserCreationForm
+from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django import forms
 
-
-
+@method_decorator([login_required, never_cache], name='dispatch')
 class ModificarRecetaView(UpdateView):
     model = Receta
-    fields = '__all__' 
+    fields = '__all__'
     template_name = 'inicio/CBV/modificar_recetas.html'
     success_url = reverse_lazy('listado_recetas')
 
@@ -51,6 +51,7 @@ class ModificarRecetaView(UpdateView):
 
         return context
 
+@method_decorator([login_required, never_cache], name='dispatch')
 class EliminarRecetaView(DeleteView):
     model = Receta
     fields = '__all__'
@@ -68,10 +69,9 @@ def crear_receta(request):
     form = CrearReceta()
 
     if request.method == "POST":
-        form = CrearReceta(request.POST,request.FILES)
+        form = CrearReceta(request.POST, request.FILES)
 
         if form.is_valid():
-
             titulo = form.cleaned_data.get("titulo")
             descripcion = form.cleaned_data.get("descripcion")
             ingredientes = form.cleaned_data.get("ingredientes")
@@ -79,7 +79,7 @@ def crear_receta(request):
             fecha_creacion = form.cleaned_data.get("fecha_creacion")
             tiempo_preparacion = form.cleaned_data.get("tiempo_preparacion")
             imagen = form.cleaned_data.get("imagen")
-  
+
             receta = Receta(titulo=titulo,
                             ingredientes=ingredientes,
                             descripcion=descripcion,
@@ -89,17 +89,17 @@ def crear_receta(request):
                             imagen=imagen)
             receta.save()
             return redirect("listado_recetas")
-    return render(request, 'inicio/crear_recetas.html',{"form":form})
+    return render(request, 'inicio/crear_recetas.html', {"form": form})
 
 @never_cache
 def listado_recetas(request):
     recetas = Receta.objects.all()
-    formulario = BuscarReceta(request.GET,request.FILES)
+    formulario = BuscarReceta(request.GET, request.FILES)
     if formulario.is_valid():
         receta_buscada = formulario.cleaned_data.get("titulo")
         recetas = Receta.objects.filter(titulo__icontains=receta_buscada)
-        
-    return render(request, 'inicio/listado_recetas.html',{'recetas':recetas,'formulario':formulario})
+
+    return render(request, 'inicio/listado_recetas.html', {'recetas': recetas, 'formulario': formulario})
 
 @never_cache
 def detalle_receta(request, receta_id):
@@ -121,10 +121,10 @@ def register(request):
         if formulario.is_valid():
             formulario.save()
             user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
-            
+
             login(request, user)
             return redirect(to="inicio")
-        
+
         data["form"] = formulario
 
     return render(request, 'registration/register.html', data)
@@ -133,5 +133,3 @@ def register(request):
 def exit(request):
     logout(request)
     return redirect('inicio')
-
-
