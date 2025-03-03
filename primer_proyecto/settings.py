@@ -1,4 +1,6 @@
 import os
+from django.contrib.messages import constants as messages
+
 """
 Django settings for primer_proyecto project.
 
@@ -38,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inicio'
+    'inicio',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
@@ -94,7 +97,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    {
+        'NAME': 'usuarios.validators.CustomPasswordValidator',
+    },
 ]
 
 
@@ -125,5 +139,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Ruta donde se almacenarán los archivos de medios (imágenes, documentos, etc.)
 MEDIA_URL = '/media/'  # URL accesible para los archivos subidos
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directorio donde se almacenarán físicamente los archivos
-LOGOUT_REDIRECT_URL = 'inicio'
-LOGIN_REDIRECT_URL = 'inicio'
+
+LOGIN_URL = '/usuarios/login/'
+
+LOGOUT_REDIRECT_URL = '/usuarios/login/'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'success',
+    messages.INFO: 'info',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'error',
+}

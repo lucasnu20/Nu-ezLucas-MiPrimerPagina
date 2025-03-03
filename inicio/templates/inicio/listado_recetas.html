@@ -1,8 +1,16 @@
-{% extends 'inicio/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Listado de recetas{% endblock %}
 
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="container my-4">
         <h1 class="text-center mb-4" style="color: white;">Listado de recetas</h1>
         <form action="" enctype="multipart/form-data" class="mb-4">
@@ -28,6 +36,7 @@
                                         <a href="{% url 'detalle_receta' receta.id %}" class="text-decoration-none text-white lead text-depth">{{ receta.titulo }}</a>
                                     </h5>
                                     <p class="card-text lead text-depth">{{ receta.descripcion }}</p>
+                                    <p>Creado por: {% if receta.usuario %} {{ receta.usuario.username }} {% else %} Anónimo {% endif %}</p>
                                 </div>
                                 {% if user.is_authenticated %}
                                 <div class="card-footer">
@@ -42,6 +51,7 @@
             </div>
         {% else %}
             <p class="text-center text-depth" style="color: rgb(248, 242, 242); font-size:30px">No existen recetas cargadas</p>
+            <p class="text-center"><a href="{% url 'crear_receta' %}" style="color: rgb(248, 242, 242); font-size:1rem;">Click aquí para crear tus propias recetas</a></p>
         {% endif %}
     </div>
 {% endblock %}

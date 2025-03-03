@@ -1,10 +1,10 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib.auth.models import User
 
-
-# Create your models here.
 
 class Receta(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="recetas")
     titulo = models.CharField(max_length=60)
     descripcion = models.TextField(max_length=3500)
     ingredientes = models.TextField(max_length=3500)
@@ -18,4 +18,10 @@ class Receta(models.Model):
 
     def __str__(self):
         return f"{self.titulo} {self.descripcion}"
+    
+
+
+
+
+
 

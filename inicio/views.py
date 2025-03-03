@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from inicio.models import Receta
-from inicio.forms import CrearReceta, BuscarReceta, CustomUserCreationForm
+from inicio.forms import CrearReceta, BuscarReceta
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django import forms
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-@method_decorator([login_required, never_cache], name='dispatch')
-class ModificarRecetaView(UpdateView):
+
+
+@method_decorator([never_cache], name='dispatch')
+class ModificarRecetaView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Receta
     fields = '__all__'
     template_name = 'inicio/CBV/modificar_recetas.html'
@@ -51,19 +54,54 @@ class ModificarRecetaView(UpdateView):
 
         return context
 
-@method_decorator([login_required, never_cache], name='dispatch')
-class EliminarRecetaView(DeleteView):
+    def form_valid(self, form):
+        #Asegurar que el usuario creador no cambie.
+        form.instance.usuario = self.get_object().usuario
+        messages.success(self.request, "La receta fue modificada correctamente.")
+        return super().form_valid(form)
+
+    def test_func(self):
+        #Restringir la modificación solo al creador de la receta.
+        receta = self.get_object()
+        return self.request.user == receta.usuario
+    
+    def handle_no_permission(self):
+        messages.error(self.request, "No tienes permiso para modificar esta receta.")
+        return redirect("listado_recetas")
+
+
+@method_decorator([never_cache], name='dispatch')
+class EliminarRecetaView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Receta
     fields = '__all__'
     template_name = 'inicio/CBV/eliminar_recetas.html'
     context_object_name = 'receta'
     success_url = reverse_lazy('listado_recetas')
 
+    def post(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        receta = self.get_object()  # Obtener la receta antes de eliminarla
+        messages.success(request, f"La receta '{receta.titulo}' fue eliminada correctamente.")
+        return super().delete(request, *args, **kwargs)
+
+    def test_func(self):
+        # Restringir la eliminacion solo al creador de la receta
+        receta = self.get_object()
+        return self.request.user == receta.usuario
+    
+    def handle_no_permission(self):
+        messages.error(self.request, "No tienes permiso para eliminar esta receta.")
+        return redirect("listado_recetas")
+
+
 # Create your views here.
 @never_cache
 def inicio(request):
     return render(request, 'inicio/inicio.html')
 
+@never_cache
 @login_required
 def crear_receta(request):
     form = CrearReceta()
@@ -86,9 +124,16 @@ def crear_receta(request):
                             pasos=pasos,
                             fecha_creacion=fecha_creacion,
                             tiempo_preparacion=tiempo_preparacion,
-                            imagen=imagen)
+                            imagen=imagen,
+                            usuario=request.user)
+            
             receta.save()
+            messages.success(request, "Receta creada correctamente.")
             return redirect("listado_recetas")
+        
+        else:
+            messages.error(request, "Hubo un error al crear la receta.")
+
     return render(request, 'inicio/crear_recetas.html', {"form": form})
 
 @never_cache
@@ -110,26 +155,7 @@ def detalle_receta(request, receta_id):
 def contacto(request):
     return render(request, 'inicio/contacto.html')
 
-@never_cache
-def register(request):
-    data = {
-        'form': CustomUserCreationForm()
-    }
-    if request.method == 'POST':
-        formulario = CustomUserCreationForm(data=request.POST)
 
-        if formulario.is_valid():
-            formulario.save()
-            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
 
-            login(request, user)
-            return redirect(to="inicio")
 
-        data["form"] = formulario
 
-    return render(request, 'registration/register.html', data)
-
-@never_cache
-def exit(request):
-    logout(request)
-    return redirect('inicio')

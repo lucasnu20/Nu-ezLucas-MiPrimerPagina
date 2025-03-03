@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mis Recetas{% endblock %}
+
+{% block content %}
+    <div class="container my-4">
+        <h1 class="text-center mb-4" style="color: white;">Mis recetas</h1>
+        <form action="" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                {{ formulario.as_p }}
+            </div>
+            <div class="d-grid">
+                <input type="submit" value="Buscar" class="btn btn-primary">
+            </div>
+        </form>
+        {% if recetas %}
+            <div class="p-4" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                <div class="row">
+                    {% for receta in recetas %}
+                        <div class="col-md-6 mb-4">
+                            <div class="receta-cardX h-100 img-container img:hover">
+                                {% if receta.imagen %}
+                                    <img src="{{ receta.imagen.url }}" alt="{{ receta.titulo }}" class="receta-img ">
+                                    
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="{% url 'detalle_receta' receta.id %}" class="text-decoration-none text-white lead text-depth">{{ receta.titulo }}</a>
+                                    </h5>
+                                    <p class="card-text lead text-depth">{{ receta.descripcion }}</p>
+                                    <p>Creado por: {% if receta.usuario %} {{ receta.usuario.username }} {% else %} Anónimo {% endif %}</p>
+                                </div>
+                                {% if user.is_authenticated %}
+                                <div class="card-footer">
+                                    <a class="btn btn-white" href="{% url 'modificar_recetas' pk=receta.pk %}">Modificar receta</a>
+                                    <a class="btn btn-white" href="{% url 'eliminar_recetas' pk=receta.pk %}">Eliminar receta</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+        {% else %}
+            <p class="text-center text-depth" style="color: rgb(248, 242, 242); font-size:30px">No tienes recetas creadas aún.</p>
+            <p class="text-center"><a href="{% url 'crear_receta' %}" style="color: rgb(248, 242, 242); font-size:1rem;">Click aquí para crear tus propias recetas</a></p>
+        {% endif %}
+    </div>
+{% endblock %}

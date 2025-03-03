@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Cambiar Contraseña{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg" style="background-color: rgba(0, 0, 0, 0.7);">
+                <div class="card-body">
+                    <h2 class="text-center mb-4" style="color:white;">Cambiar Contraseña</h2>
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label for="id_old_password" class="form-label">Contraseña Actual: </label>
+                            <input type="password" name="old_password" id="id_old_password" class="hidden-input" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="id_new_password1" class="form-label">Nueva Contraseña: </label>
+                            <input type="password" name="new_password1" id="id_new_password1" class="hidden-input" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="id_new_password2" class="form-label">Confirmar Nueva Contraseña: </label>
+                            <input type="password" name="new_password2" id="id_new_password2" class="hidden-input" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100" style="padding:5px; width: auto;">Cambiar Contraseña</button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="{% url 'ver_perfil' %}" class="text-depth" style="font-size:1.2rem;">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

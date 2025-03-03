@@ -1,9 +1,24 @@
-{% extends 'inicio/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}{{ receta.titulo }}{% endblock %}
 
 {% block content %}
-
+    <style>
+        .img-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .img-container img {
+            max-width: 100%;
+            max-height: 400px; /* Ajusta el tamaño máximo según sea necesario */
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+        }
+    </style>
     <div class="container my-4 text-depth" style="color: white;">
         <h1 class="text-center mb-4 text-depth" style="color: white; font-size:35px">{{ receta.titulo }}</h1>
         {% if receta.imagen %}
@@ -12,11 +27,12 @@
             </div>
         {% endif %}
         <div class="p-4" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 8px; font-size: 20px">
-            <p ><strong>Descripción:</strong> {{ receta.descripcion }}</p>
-            <p ><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
-            <p ><strong>Pasos a seguir:</strong> {{ receta.pasos }}</p>
-            <p ><strong>Tiempo de preparación:</strong> {{ receta.tiempo_preparacion }} minutos</p>
-            <p ><strong>Fecha de creación:</strong> {{ receta.fecha_creacion }}</p>
+            <p><strong>Descripción:</strong> {{ receta.descripcion }}</p>
+            <p><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
+            <p><strong>Pasos a seguir:</strong> {{ receta.pasos }}</p>
+            <p><strong>Tiempo de preparación:</strong> {{ receta.tiempo_preparacion }} minutos</p>
+            <p><strong>Fecha de creación:</strong> {{ receta.fecha_creacion }}</p>
+            <p><strong>Creado por:</strong> {% if receta.usuario %} {{ receta.usuario.username }} {% else %} Anónimo {% endif %}</p>
         </div>
     </div>
 {% endblock %}

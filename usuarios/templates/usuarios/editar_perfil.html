@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<style>
+    /* Contenedor principal */
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+        color: white;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Contenedor de la imagen de perfil */
+    .profile-img-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    /* Imagen de perfil estilizada */
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #ffffff;
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.3s ease;
+    }
+    .profile-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .profile-img:hover {
+        transform: scale(1.1);
+    }
+    .profile-img::after {
+        content: '+';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.8);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .profile-img:hover::after {
+        opacity: 1;
+    }
+
+    /* Información del perfil */
+    .profile-info {
+        width: 100%;
+        max-width: 650px;
+        background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+        margin-bottom: 25px;
+        color: #fff;
+    }
+
+    /* El botón de cambiar contraseña */
+    .profile-info .change-password {
+        font-size: 1.1rem;
+        color: #007bff;
+        text-decoration: none;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+    .profile-info .change-password:hover {
+        text-decoration: underline;
+    }
+
+    /* Títulos de los campos de perfil */
+    .profile-info h2 {
+        font-size: 1.5rem; /* Ajustar el tamaño */
+        margin-bottom: 15px;
+        font-weight: normal;
+        color: white; /* Restauramos el color original */
+    }
+
+    /* Estilo de los campos de texto ocultos para edición */
+    .hidden-input {
+        display: none;
+    }
+
+    /* Icono para editar */
+    .edit-icon {
+        cursor: pointer;
+        margin-left: 10px;
+        font-size: 1rem;
+        color: #dcdcdc; /* Lápiz de color gris más discreto */
+        transition: color 0.3s ease;
+    }
+    .edit-icon:hover {
+        color: #007bff; /* Cambio de color cuando pasa el mouse */
+    }
+
+    /* Estilo de los formularios extras y detalles */
+    .profile-extra, .profile-details, .profile-form {
+        width: 100%;
+        max-width: 650px;
+        background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+        margin-bottom: 20px;
+    }
+
+    /* Campos de formulario con fondo semitransparente */
+    .profile-extra form, .profile-details form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .profile-extra p, .profile-details p {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .profile-extra input, .profile-details input, .profile-extra textarea, .profile-details textarea {
+        background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+        border: 1px solid #444;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1rem;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .profile-extra input:focus, .profile-details input:focus, .profile-extra textarea:focus, .profile-details textarea:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    /* Botones de formulario */
+    .profile-form button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.3rem;
+        margin-top: 20px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+    .profile-form button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Estilo para el enlace de cambiar contraseña */
+    .profile-form a {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        font-size: 1.2rem;
+        color: #007bff;
+        text-decoration: none;
+    }
+    .profile-form a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container profile-container">
+             <!-- User -->
+            <div class="profile-img-container">
+                {% if user.infousuario.foto_perfil and user.infousuario.foto_perfil.url %}
+                    <div class="profile-img" onclick="document.getElementById('profile-image-input').click();">
+                        <img id="profile-image" src="{{ user.infousuario.foto_perfil.url }}" alt="Imagen de perfil">
+                    </div>
+                {% else %}
+                    <div class="profile-img" onclick="document.getElementById('profile-image-input').click();">
+                        <img id="profile-image" src="{% static 'images/profile.webp' %}" alt="Imagen de perfil">
+                    </div>
+                {% endif %}
+
+                
+                <input type="file" name="foto_perfil" id="profile-image-input" style="display: none;" onchange="previewImage(event);">
+                
+                <!-- Checkbox para eliminar la foto -->
+                <label>
+                    <input type="checkbox" name="eliminar_foto" id="eliminar-foto-checkbox" onchange="resetProfileImage()">
+                    Eliminar foto de perfil
+                </label>
+            </div>
+
+            <div class="profile-info">
+                <a href={% url "cambiar_pass" %} class="change-password btn btn-primary" style="color:white">Cambiar contraseña</a>
+
+                <h2 class="text-depth">{{ form.first_name.label_tag }} {{ user.first_name }} <span class="edit-icon" onclick="toggleEdit('first_name-input')">&#9998</span></h2>
+                <input type="text" id="first_name-input" name="{{ form.first_name.name }}" class="hidden-input" value="{{ user.first_name }}">
+
+                <h2 class="text-depth">{{ form.last_name.label_tag }} {{ user.last_name }} <span class="edit-icon" onclick="toggleEdit('last_name-input')">&#9998</span></h2>
+                <input type="text" id="last_name-input" name="{{ form.last_name.name }}" class="hidden-input" value="{{ user.last_name }}">
+
+                <h2 class="text-depth">{{ form.email.label_tag }} {{ user.email }} <span class="edit-icon" onclick="toggleEdit('email-input')">&#9998</span></h2>
+                <input type="text" id="email-input" name="{{ form.email.name }}" class="hidden-input" value="{{ user.email }}">
+            </div>
+
+            <!-- InfoUsuario-->
+            <div class="profile-extra">
+                <p class="text-depth">{{ form.detalle_perfil.label_tag }} {{ form.detalle_perfil }}</p>
+                <p class="text-depth">{{ form.intereses_culinarios.label_tag }} {{ form.intereses_culinarios }}</p>
+                <p class="text-depth">{{ form.telefono.label_tag }} {{ form.telefono }}</p>
+                <p class="text-depth">{{ form.fecha_nacimiento.label_tag }} {{ form.fecha_nacimiento }}</p>
+            </div>
+
+             <!-- UbicacionUser -->
+            <div class="profile-details">
+                <p>Ubicacion</p>
+                <p class="text-depth">{{ form_ubicacion.pais.label_tag }} {{ form_ubicacion.pais }}</p>
+                <p class="text-depth">{{ form_ubicacion.provincia.label_tag }} {{ form_ubicacion.provincia }}</p>
+                <p class="text-depth">Localidad/{{ form_ubicacion.ciudad.label_tag }} {{ form_ubicacion.ciudad }}</p>
+            </div>
+
+            <div class="profile-form">
+                <button type="submit" class="btn btn-primary">Modificar perfil</button>
+            </div>
+        </div>
+    </form>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var fileInput = document.getElementById("profile-image-input");
+    var profileImage = document.getElementById("profile-image");
+    var checkbox = document.getElementById("eliminar-foto-checkbox");
+
+    if (fileInput) {
+        fileInput.addEventListener("change", previewImage);
+    }
+
+    if (checkbox) {
+        checkbox.addEventListener("change", resetProfileImage);
+    }
+});
+
+function previewImage(event) {
+    var file = event.target.files[0];
+    var profileImage = document.getElementById("profile-image");
+
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            profileImage.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+function toggleEdit(inputId) {
+    var inputField = document.getElementById(inputId);
+    
+    if (inputField) {
+        if (inputField.classList.contains("hidden-input")) {
+            inputField.classList.remove("hidden-input");
+            inputField.focus(); // Enfocar automáticamente el campo al activarlo
+        } else {
+            inputField.classList.add("hidden-input");
+        }
+    }
+}
+
+function resetProfileImage() {
+    var checkbox = document.getElementById("eliminar-foto-checkbox");
+    var profileImage = document.getElementById("profile-image");
+    var fileInput = document.getElementById("profile-image-input");
+
+    if (checkbox.checked) {
+        profileImage.src = "/static/images/profile.webp"; // Imagen predeterminada
+        if (fileInput) {
+            fileInput.value = ""; // Borrar input file correctamente
+        }
+    }
+}
+    // Script para actualizar provincias basado en el país seleccionado
+    document.getElementById("id_pais").addEventListener("change", function() {
+        var paisId = this.value; // Obtener el ID del país seleccionado
+        fetch(`obtener-provincias/?pais_id=${paisId}`)
+            .then(response => response.json())
+            .then(data => {
+                var provinciaSelect = document.getElementById("id_provincia");
+                provinciaSelect.innerHTML = ""; // Limpiar las opciones anteriores
+                var defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Seleccione una provincia";
+                provinciaSelect.appendChild(defaultOption);
+
+                // Añadir las nuevas opciones (provincias)
+                data.forEach(function(provincia) {
+                    var option = document.createElement("option");
+                    option.value = provincia.id;
+                    option.textContent = provincia.nombre;
+                    provinciaSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar las provincias:', error));
+    });
+</script>
+
+{% endblock %}
