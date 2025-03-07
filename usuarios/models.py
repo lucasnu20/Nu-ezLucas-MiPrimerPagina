@@ -42,7 +42,7 @@ class InfoUsuario(models.Model):
                     if os.path.isfile(old_instance.foto_perfil.path):  # Verifica que el archivo existe
                         os.remove(old_instance.foto_perfil.path)  # Elimina la imagen anterior
             except InfoUsuario.DoesNotExist:
-                pass  # Si el usuario no existe aún, no hace nada
+                pass  # Si el usuario no existe, no hace nada
 
     def save(self, *args, **kwargs):
         self.delete_old_image()  # Llama a la función antes de guardar

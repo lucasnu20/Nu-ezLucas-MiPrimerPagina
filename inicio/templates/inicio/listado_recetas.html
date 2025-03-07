@@ -36,7 +36,14 @@
                                         <a href="{% url 'detalle_receta' receta.id %}" class="text-decoration-none text-white lead text-depth">{{ receta.titulo }}</a>
                                     </h5>
                                     <p class="card-text lead text-depth">{{ receta.descripcion }}</p>
-                                    <p>Creado por: {% if receta.usuario %} {{ receta.usuario.username }} {% else %} Anónimo {% endif %}</p>
+                                    <p>
+                                        Creado por: 
+                                        {% if receta.usuario %}  
+                                            <a href="{% url 'perfil_usuario' receta.usuario.id %}" class="text-white">{{ receta.usuario.username }}</a>
+                                        {% else %} 
+                                            Anónimo 
+                                        {% endif %}
+                                    </p>
                                 </div>
                                 {% if user.is_authenticated %}
                                 <div class="card-footer">

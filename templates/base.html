@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     {% include 'estilos.html' %}
 </head>
-
 <body>
     <video autoplay muted loop class="video-background">
         <source src="{% static 'videos/background.mp4' %}" type="video/mp4">
@@ -21,12 +20,13 @@
     <div class="content">
         <nav class="navbar navbar-expand-lg navbar-light w-100">
             <div class="container-fluid">
-                <a class="nav-link" href={% url 'inicio' %}>Inicio</a>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
+                        <a class="nav-link" href={% url 'inicio' %}>Inicio</a>
                         <li class="nav-item">
                             <a class="nav-link" href={% url 'listado_recetas' %}>Listado de recetas</a>
                         </li>
@@ -37,10 +37,23 @@
                             <li class="nav-item">
                                 <a class="nav-link" href={% url 'ver_perfil' %}>Mi Perfil</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'mis_recetas' request.user.id %}">Mis Recetas</a>
+                            </li>
                             <form action={% url 'logout' %} method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                             </form>
+                            
+                            <form class="nav-item text-" action="{% url 'buscar_usuarios' %}"> <!-- Agregamos un margen a la izquierda -->
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="search" name="q" placeholder="🔍 Buscar usuarios" style="font-size:1rem; color:rgba(0, 0, 0,);padding:5px;">
+                                &nbsp;&nbsp;<a class="btn btn-primary" href="{% url 'buscar_usuarios' %}" type="submit" style="padding:5px;">Buscar</a>
+                            </form>
+                            
+                            
+                            
+                            
                         {% else %}    
                             <li class="nav-item">
                                 <a class="nav-link" href={% url 'login' %}>Iniciar sesión</a>
@@ -59,17 +72,7 @@
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- Start of ChatBot code -->
-    <script>
-        window.__ow = window.__ow || {};
-        window.__ow.organizationId = "55dc69e2-e081-461b-88ae-983ba9c36a8f";
-        window.__ow.template_id = "a461e8ea-e147-432b-90d6-5900e60c006a";
-        window.__ow.integration_name = "manual_settings";
-        window.__ow.product_name = "chatbot";   
-        ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[OpenWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.openwidget.com/openwidget.js",t.head.appendChild(n)}};!n.__ow.asyncInit&&e.init(),n.OpenWidget=n.OpenWidget||e}(window,document,[].slice))
-      </script>
-      <noscript>You need to <a href="https://www.chatbot.com/help/chat-widget/enable-javascript-in-your-browser/" rel="noopener nofollow">enable JavaScript</a> in order to use the AI chatbot tool powered by <a href="https://www.chatbot.com/" rel="noopener nofollow" target="_blank">ChatBot</a></noscript>
-      <!-- End of ChatBot code -->
+
 
     <footer>
         <div class="footer-logo">

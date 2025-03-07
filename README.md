@@ -1,20 +1,35 @@
-Nuñez Lucas - Proyecto curso 75135
+Nuñez Lucas - Proyecto Curso 75135
+Descripción del Proyecto
+Este proyecto representa mi primera página web desarrollada como parte del curso 75135. Se trata de un recetario online, diseñado para que los usuarios puedan explorar, crear y gestionar recetas culinarias de manera sencilla e intuitiva.
 
-Este proyecto de mi primer pagina web es un recetario, en el inicio tendras una bienvenida
+Funcionalidades Principales
 
-Podras navegar por las distintas funcionalidades con el menu de navegacion en la parte superior.
+1️⃣ Navegación y Bienvenida
+Al acceder a la página de inicio, los usuarios serán recibidos con una pantalla de bienvenida.
+La navegación se realiza a través de un menú ubicado en la parte superior, desde donde se puede acceder a las diferentes secciones del sitio.
 
-Podes crear recetas, modificarlas y  eliminarlas.
+2️⃣ Gestión de Recetas
+📌 Crear Recetas: Los usuarios registrados pueden agregar nuevas recetas al recetario.
+✏️ Editar Recetas: Si una receta fue creada por el usuario, podrá modificarla.
+🗑️ Eliminar Recetas: También podrá eliminar sus propias recetas si lo desea.
 
-Para poder crear recetas deberas registrarte o tener una cuenta y loguearte. Lo mismo para modificar y eliminar recetas.
+⚠️ Nota: Para realizar cualquiera de estas acciones (crear, modificar o eliminar recetas), es obligatorio estar registrado y haber iniciado sesión en la plataforma.
 
-Tambien podes ver un listado de todas las recetas que hay creadas y visualizar su detalle sin necesidad de estar logueado.
+3️⃣ Exploración de Recetas
+Cualquier visitante del sitio puede ver el listado completo de recetas disponibles en la plataforma.
+También es posible acceder al detalle de cada receta para visualizar información más específica, sin necesidad de estar autenticado.
+Cada receta está asociada a un usuario, se podrá visualizar el perfil publico del creador y también ver las recetas que este usuario haya creado!
 
-Tienes un chatbot que te puede ayudar si necesitas la recomendacion de alguna receta o saber algun dato de alguna receta.
+Cada usuario tiene su perfil publico donde se puede ver su informacion y las recetas creadas por ese usuario.
+Cada usuario puede editar todos los datos de su perfil salvo el email, nombre, apellido y username , ten cuidado con estos datos porque no podrás cambiarlos!
 
-Tienes un apartado de "contacto" donde podes conocerme un poco más y tambien tienes links a mis redes sociales o mi correo electronico.
+Si te encuentras logueado con tu cuenta, tendrás acceso a una barra de busqueda donde podrás buscar otros usuarios, ver sus perfiles publicos y sus recetas creadas!
 
-Para experiencia mas inmersiva visualizar con zoom 100% 
+4️⃣ Sección de Contacto
+En el apartado de "Contacto", los usuarios pueden conocer más sobre mí.
+También se incluyen enlaces a mis redes sociales y correo electrónico, facilitando la comunicación.
+Requisitos Técnicos
+Para una mejor experiencia, se recomienda visualizar el sitio con un zoom del 100%.
 
 Para cargar Paises y Provincias asegurarse de haber instalado pandas con el pip install y luego utilice el comando python manage.py cargar_paises_y_provincias. Esto cargara automaticamente todos los paises y provincias del Excel que se utilizó como DataFrame en nuestra base de datos. Debe estar la carpeta management/commands dentro de la app "usuarios" y dentro de commands debe estar el archivo "cargar_paises_y_provincias.py"
 

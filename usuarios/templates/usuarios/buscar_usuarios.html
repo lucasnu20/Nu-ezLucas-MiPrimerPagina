@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultados de la búsqueda{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center text-white">Resultados de la búsqueda</h2>
+    <p class="text-white">Resultados para "{{ busqueda }}"</p>
+
+    {% if usuarios %}
+        <div class="p-4" style="background-color: rgba(0, 0, 0, 0.7); border-radius: 10px;">
+            <div class="row">
+                {% for usuario in usuarios %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card text-white border-0 shadow-lg" 
+                        style="background: rgba(53, 52, 52, 0.3); border-radius: 12px; border: 2px solid white;">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    <a href="{% url 'perfil_usuario' usuario.id %}" 
+                                       class="text-decoration-none text-white fw-bold p-2 rounded d-inline-block"
+                                       style="background-color: rgba(255, 255, 255, 0.2);">
+                                        {{ usuario.username }}
+                                    </a>
+                                </h5>
+                                <hr style="border-color: rgba(255, 255, 255, 0.3);">
+                                <p class="card-text">
+                                    <strong>Sobre mí:</strong> 
+                                    <span class="d-block">{{ usuario.infousuario.detalle_perfil|default:"No especificado"  }}</span>
+                                </p>
+                                <p class="card-text">
+                                    <strong>Intereses culinarios:</strong> 
+                                    <span class="d-block">{{ usuario.infousuario.intereses_culinarios|default:"No especificado"  }}</span>
+                                </p>
+                                <p class="card-text">
+                                    <strong>Nacionalidad:</strong> 
+                                    <span class="d-block">{{ usuario.infousuario.ubicacion.provincia|default:"No especificado" }}</span>
+                                </p>
+                                <p class="card-text">
+                                    <strong>Recetas creadas:</strong> {{ usuario.num_recetas|default:0 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center text-light fs-4">No se encontraron usuarios</p>
+    {% endif %}
+</div>
+{% endblock %}

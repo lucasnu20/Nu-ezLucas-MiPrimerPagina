@@ -1,17 +1,45 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.contrib.auth import login as django_login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+from django.contrib.auth.views import PasswordChangeView, LogoutView
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from usuarios.forms import CrearUsuarioForm, EditarUsuarioForm, UbicacionUserForm
 from inicio.forms import BuscarReceta
-from django.contrib.auth.views import PasswordChangeView, LogoutView
-from django.urls import reverse_lazy
-from usuarios.models import InfoUsuario, Provincia, UbicacionUser
+from inicio.models import Receta
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
+from usuarios.models import InfoUsuario, Provincia, UbicacionUser
+from django.views.generic import DetailView
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
-from django.contrib import messages
-from inicio.models import Receta
+from django.db.models import Count
+
+
+class PerfilUsuarioView(DetailView):
+    model = User
+    template_name = 'usuarios/perfil_usuario.html'
+    context_object_name = 'perfil_usuario'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Obtener InfoUsuario basado en user_id
+        info_usuario = InfoUsuario.objects.filter(user_id=self.object.id).first()
+        context['info_usuario'] = info_usuario
+
+        # Obtener UbicacionUser basado en infousuario_id
+        if info_usuario:
+            context['ubicacion_usuario'] = UbicacionUser.objects.filter(infousuario_id=info_usuario.id).first()
+        else:
+            context['ubicacion_usuario'] = None
+
+        # Obtener recetas creadas por el usuario
+        recetas_usuario = Receta.objects.filter(usuario_id=self.object.id)
+        context['recetas_usuario'] = recetas_usuario
+
+        return context
 
 
 @method_decorator([never_cache], name='dispatch')
@@ -78,7 +106,6 @@ def editar_perfil(request):
         form_ubicacion = UbicacionUserForm(request.POST, instance=ubicacion)
 
         # Actualizar provincias según el país seleccionado
-        print(f"post: {request.POST}")
         pais_id = request.POST.get('pais')
         if pais_id:
             form_ubicacion.fields['provincia'].queryset = Provincia.objects.filter(pais_id=pais_id)
@@ -95,10 +122,12 @@ def editar_perfil(request):
 
             # Actualizo con los cleaned data para datos de usuario y ubicación 
             for campo in ['fecha_nacimiento', 'telefono', 'detalle_perfil', 'intereses_culinarios']:
-                setattr(info_usuario, campo, form.cleaned_data.get(campo) or getattr(info_usuario, campo))
+                valor = form.cleaned_data.get(campo)
+                setattr(info_usuario, campo, valor if valor != "" else None)
 
             for campo in ['pais', 'provincia', 'ciudad']:
-                setattr(ubicacion, campo, form_ubicacion.cleaned_data.get(campo) or getattr(ubicacion, campo))
+                valor = form_ubicacion.cleaned_data.get(campo)
+                setattr(ubicacion, campo, valor if valor != "" else None)
 
             info_usuario.save()
             ubicacion.save()
@@ -125,7 +154,6 @@ def editar_perfil(request):
 
 
 @never_cache
-@login_required
 def ver_perfil(request):
     info_usuario = request.user.infousuario
     ubicacion, _ = UbicacionUser.objects.get_or_create(infousuario=info_usuario)
@@ -148,6 +176,8 @@ def obtener_provincias(request):
     return JsonResponse([], safe=False)
 
 
+@never_cache
+@login_required
 def recetas_usuario(request, user_id):
     recetas = Receta.objects.filter(usuario_id=user_id)
     formulario = BuscarReceta(request.GET, request.FILES)
@@ -155,3 +185,14 @@ def recetas_usuario(request, user_id):
         receta_buscada = formulario.cleaned_data.get("titulo")
         recetas = Receta.objects.filter(titulo__icontains=receta_buscada, usuario_id=user_id)
     return render(request, 'usuarios/mis_recetas.html', {'recetas': recetas, 'formulario': formulario})
+
+@never_cache
+@login_required
+def buscar_usuarios(request):
+    busqueda_del_usuario = request.GET.get('q', '')  # Valor del campo de búsqueda
+    usuarios = User.objects.filter(username__icontains=busqueda_del_usuario).select_related(
+        "infousuario__ubicacion__provincia"
+    ).annotate(num_recetas=Count('recetas'))
+
+
+    return render(request, 'usuarios/buscar_usuarios.html', {'usuarios': usuarios, 'busqueda': busqueda_del_usuario})

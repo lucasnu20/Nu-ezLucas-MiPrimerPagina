@@ -32,7 +32,14 @@
             <p><strong>Pasos a seguir:</strong> {{ receta.pasos }}</p>
             <p><strong>Tiempo de preparación:</strong> {{ receta.tiempo_preparacion }} minutos</p>
             <p><strong>Fecha de creación:</strong> {{ receta.fecha_creacion }}</p>
-            <p><strong>Creado por:</strong> {% if receta.usuario %} {{ receta.usuario.username }} {% else %} Anónimo {% endif %}</p>
+            <p>
+                Creado por: 
+                {% if receta.usuario %}  
+                    <a href="{% url 'perfil_usuario' receta.usuario.id %}" class="text-white">{{ receta.usuario.username }}</a>
+                {% else %} 
+                    Anónimo 
+                {% endif %}
+            </p>    
         </div>
     </div>
 {% endblock %}
