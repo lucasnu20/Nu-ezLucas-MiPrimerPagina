@@ -33,6 +33,7 @@ Para una mejor experiencia, se recomienda visualizar el sitio con un zoom del 10
 
 Para cargar Paises y Provincias asegurarse de haber instalado pandas con el pip install y luego utilice el comando python manage.py cargar_paises_y_provincias. Esto cargara automaticamente todos los paises y provincias del Excel que se utilizó como DataFrame en nuestra base de datos. Debe estar la carpeta management/commands dentro de la app "usuarios" y dentro de commands debe estar el archivo "cargar_paises_y_provincias.py"
 Link al video: https://drive.google.com/file/d/12XwMuLR1nGCd2ujqmXoPqNs8P8zYsC8c/view?usp=sharing
+Despliegue en PythonAnywhere: https://lucasnu.pythonanywhere.com/
 Esto es recien el comienzo! Muchas gracias.
 
 
